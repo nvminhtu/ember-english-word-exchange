@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Online Pizza Store</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <script type="text/x-handlebars">
+       <nav class="navbar navbar-inverse navbar-fixed-top">
+           <div class="container">
+               <div class="navbar-header">
+                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                       <span class="sr-only">Toggle navigation</span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                   </button>
+                   <a class="navbar-brand" href="#/">English Word Exchange</a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+                   <ul class="nav navbar-nav">
+                       {{#link-to 'index' tagName='li'}}
+                         {{#link-to 'index'}}Home{{/link-to}}
+                      {{/link-to}}
+                      {{#link-to 'posts' tagName='li'}}
+                        {{#link-to 'posts'}}Posts{{/link-to}}
+                     {{/link-to}}
+
+                   </ul>
+               </div>
+           </div>
+       </nav>
+       <div class="container">
+           {{outlet}}
+       </div>
+   </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    <div class="jumbotron">
+      <div class="container">
+          <h1>English Word Exchange</h1>
+          <p>This is a website for users can exchange english word (with new words and example for them)</p>
+          <p>Join with us for building a good community</p>
+          {{#link-to 'posts' tagName='a' class="btn btn-primary btn-lg" role="button"}}View Words »{{/link-to}}
+          {{#link-to 'posts.new' tagName='a' class="btn btn-primary btn-lg" role="button"}}Create new word »{{/link-to}}
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="posts">
+      {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="posts/index">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="posts list-unstyled">
+              {{#each model key="@index" as |post|}}
+              <li>
+                <h3>{{#link-to 'post' post}}{{post.title}}{{/link-to}}</h3>
+                <p>{{post.text}}</p>
+              </li>
+              {{/each}}
+          </ul>
+          {{#link-to 'posts.new'}}{{input type="button" class="btn btn-primary" value="New Post"}}{{/link-to}}
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="post">
+      {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="post/index">
+      {{model.title}}
+      {{model.text}}
+      <ul class="list-unstyled">
+          {{#each model.comments key="@index" as |comment|}}
+          <li>{{#link-to 'post.comment' comment}}{{comment.text}}{{/link-to}}</li>
+          {{/each}}
+      </ul>
+      {{#link-to 'post.comments.new'}}New Comment{{/link-to}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="post/comment">
+      {{model.text}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="post/comments/new">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <form {{action 'save' on='submit' }}>
+              <div class="form-group">
+                <label for="textComment">Comment</label>
+                {{textarea id="textComment" class="form-control" value=text placeholder="Enter comment here"}}
+              </div>
+              <div class="form-group">
+                {{input type="submit" class="btn btn-primary" value="Create Comment"}}
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="posts/new">
+      <form {{action 'save' content on='submit' }}>
+          <h3>Insert new post</h3>
+          <div class="form-group">
+            <label for="titlePost">Title</label>
+            {{textarea id="titlePost" class="form-control" value=title placeholder="Enter title here"}}
+          </div>
+          <div class="form-group">
+            <label for="textPost">Content</label>
+            {{textarea id="textPost" class="form-control" value=text placeholder="Enter content here"}}
+          </div>
+          <div class="form-group">
+            {{input type="submit" class="btn btn-primary" value="Create Post"}}
+          </div>
+      </form>
+  </script>
+
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
+    <script src="js/libs/ember-1.10.0.debug.js"></script>
+    <script src="js/libs/ember-data.prod.js"></script>
+    <!-- <script src="js/fixture.js"></script> -->
+    <script src="js/app.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/fixture.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/adapters.js"></script>
+
+    <!-- <script src="js/components.js"></script> -->
+    <!-- to activate the test runner, add the "?test" query string parameter -->
+
+</body>
+
+</html>
